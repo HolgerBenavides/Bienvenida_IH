@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenida - Ingeniería Hidráulica II</title>
+
+<script>
+        // Esta función comprueba si la página está dentro de un marco (iframe)
+        if (window.self !== window.top) {
+            // Si está en un iframe, redirige la ventana principal a la URL actual
+            // Esto "rompe" el iframe y abre la página en la pestaña completa
+            window.top.location.href = window.location.href;
+        }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.179.1/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            overflow-x: hidden;
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.9) 100%);
+        }
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .backdrop-blur-custom {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-up {
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .water-flow {
+            position: relative;
+            overflow: hidden;
+        }
+        .water-flow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center hero-bg" id="hero">
+        <div class="absolute inset-0 z-0">
+            <div id="vanta-bg" class="w-full h-full"></div>
+        </div>
+        
+        <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
+            <div class="animate-fade-in">
+                <div class="mb-8">
+                    <i class="fas fa-water text-6xl text-blue-300 mb-6 block"></i>
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-black text-white mb-6 text-shadow leading-tight">
+                    Bienvenidos a<br>
+                    <span class="text-blue-300">Ingeniería Hidráulica II</span>
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-gray-200 mb-8 max-w-4xl mx-auto leading-relaxed">
+                    Explorando la dinámica del agua en nuestro entorno urbano a través del estudio de tributarios y aplicaciones prácticas de ingeniería
+                </p>
+                
+                <div class="animate-slide-up">
+                    <div class="bg-white/10 backdrop-blur-custom rounded-2xl p-8 max-w-2xl mx-auto border border-white/20">
+                        <h2 class="text-2xl font-bold text-white mb-4">
+                            <i class="fas fa-map-marked-alt mr-3 text-blue-300"></i>
+                            Proyecto Semestral
+                        </h2>
+                        <p class="text-lg text-gray-100 leading-relaxed">
+                            Estudio hidráulico de tributarios de los ríos Malacatos y Zamora en la ciudad de Loja
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-white text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- Course Overview -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-black gradient-text mb-6">
+                    Tu Formación en Acción
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    Esta asignatura te permitirá aplicar conocimientos teóricos en un proyecto real que impactará positivamente en la gestión del recurso hídrico de nuestra ciudad
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="card-hover bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 border border-blue-200">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-chart-line text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Análisis Hidrológico</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Estimación de caudales máximos, medios y mínimos para diferentes periodos de retorno usando herramientas especializadas
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="card-hover bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 border border-green-200">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-drafting-compass text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Modelación Hidráulica</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Simulación del flujo en cauces urbanos con software especializado como HEC-RAS y SewerGEMS
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="card-hover bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 border border-purple-200">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-flask text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Aforos Experimentales</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Implementación de canaletas hidráulicas para mediciones directas y validación de resultados teóricos
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Details -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl font-black text-gray-800 mb-8">
+                        Nuestro Proyecto:<br>
+                        <span class="text-blue-600">Tributarios de Loja</span>
+                    </h2>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">Caracterización Completa</h3>
+                                <p class="text-gray-600">Levantamientos topográficos, hidrológicos e hidráulicos de las quebradas urbanas</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">Análisis de Riesgo</h3>
+                                <p class="text-gray-600">Evaluación de inundaciones y problemas de infraestructura en zonas urbanas</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4">
+                            <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">Producto Final</h3>
+                                <p class="text-gray-600">Memoria técnica completa con planos, cálculos y modelos hidráulicos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="water-flow bg-white rounded-3xl p-8 shadow-2xl border border-gray-200">
+                        <div class="text-center mb-8">
+                            <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                                <i class="fas fa-map text-white text-3xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800">Área de Estudio</h3>
+                            <p class="text-gray-600 mt-2">Ciudad de Loja</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center p-4 bg-blue-50 rounded-xl">
+                                <i class="fas fa-water text-blue-500 text-2xl mb-2"></i>
+                                <p class="text-sm font-semibold text-gray-700">Río Malacatos</p>
+                            </div>
+                            <div class="text-center p-4 bg-green-50 rounded-xl">
+                                <i class="fas fa-water text-green-500 text-2xl mb-2"></i>
+                                <p class="text-sm font-semibold text-gray-700">Río Zamora</p>
+                            </div>
+                            <div class="text-center p-4 bg-purple-50 rounded-xl">
+                                <i class="fas fa-tint text-purple-500 text-2xl mb-2"></i>
+                                <p class="text-sm font-semibold text-gray-700">Quebradas</p>
+                            </div>
+                            <div class="text-center p-4 bg-orange-50 rounded-xl">
+                                <i class="fas fa-city text-orange-500 text-2xl mb-2"></i>
+                                <p class="text-sm font-semibold text-gray-700">Zona Urbana</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-black gradient-text mb-6">
+                    Metodología STEAM
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    Integrando Ciencia, Tecnología, Ingeniería, Arte y Matemáticas para una formación integral
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-5 gap-6">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-atom text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Science</h3>
+                    <p class="text-sm text-gray-600">Conocimiento científico y análisis de datos</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-laptop-code text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Technology</h3>
+                    <p class="text-sm text-gray-600">Software especializado y herramientas digitales</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-cogs text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Engineering</h3>
+                    <p class="text-sm text-gray-600">Soluciones técnicas y diseño de sistemas</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-palette text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Arts</h3>
+                    <p class="text-sm text-gray-600">Comunicación visual y presentación técnica</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-calculator text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Mathematics</h3>
+                    <p class="text-sm text-gray-600">Modelación matemática y análisis numérico</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Welcome Message -->
+    <section class="py-20 bg-gradient-to-br from-slate-800 to-blue-900">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="bg-white/10 backdrop-blur-custom rounded-3xl p-12 border border-white/20">
+                <div class="mb-8">
+                    <i class="fas fa-graduation-cap text-6xl text-blue-300 mb-6 block"></i>
+                </div>
+                
+                <h2 class="text-4xl font-black text-white mb-8 text-shadow">
+                    ¡Bienvenidos a esta Experiencia de Aprendizaje!
+                </h2>
+                
+                <div class="text-left space-y-6 text-gray-100 text-lg leading-relaxed">
+                    <p>
+                        Estimados estudiantes de Ingeniería Hidráulica II:
+                    </p>
+                    
+                    <p>
+                        Nos encontramos ante una oportunidad única de aplicar nuestros conocimientos en un proyecto que trasciende las aulas. A través del estudio de los tributarios de los ríos Malacatos y Zamora, no solo desarrollaremos competencias técnicas en hidráulica urbana, sino que contribuiremos al conocimiento científico de nuestra comunidad.
+                    </p>
+                    
+                    <p>
+                        Esta experiencia práctica les permitirá enfrentar problemas reales de gestión de recursos hídricos, trabajar con herramientas profesionales de modelación y generar productos tangibles que podrán incluir en su portafolio profesional.
+                    </p>
+                    
+                    <p>
+                        <strong>¡Prepárense para una experiencia transformadora donde la teoría se encuentra con la práctica!</strong>
+                    </p>
+                </div>
+                
+                <div class="mt-12 pt-8 border-t border-white/20">
+                    <p class="text-blue-200 text-xl font-semibold">
+                        <i class="fas fa-user-tie mr-3"></i>
+                        Holger Manuel Benavides Muñoz<br>
+                        <span class="text-lg font-normal">Docente - Ingeniería Hidráulica II</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <div class="mb-6">
+                <i class="fas fa-university text-3xl text-blue-400 mb-4 block"></i>
+                <h3 class="text-2xl font-bold mb-2">Universidad Técnica Particular de Loja</h3>
+                <p class="text-gray-400">Facultad de Ingenierías y Arquitectura - Ingeniería Civil</p>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-6">
+                <p class="text-gray-400">
+                    Período Académico: Octubre 2025 - Febrero 2026 | Asignatura: Ingeniería Hidráulica II
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Vanta.js background
+        VANTA.BIRDS({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            backgroundColor: 0x1e293b,
+            color1: 0x3b82f6,
+            color2: 0x1e40af,
+            colorMode: "lerp",
+            birdSize: 1.50,
+            wingSpan: 25.00,
+            speedLimit: 4.00,
+            separation: 50.00,
+            alignment: 50.00,
+            cohesion: 50.00,
+            quantity: 3.00
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for animation
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
